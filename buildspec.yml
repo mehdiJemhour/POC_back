@@ -7,7 +7,7 @@ phases:
       - $(aws ecr get-login --no-include-email --region $AWS_DEFAULT_REGION)
   build:
     commands:
-      - echo Build Docker Image alpha-bdx-import Started at `date`
+      - echo Build Docker Image alpha-bdx-import Started
       - docker build -t $AWS_DOCKER_NAME:$AWS_DOCKER_TAG .
   post_build:
     commands:

@@ -3,7 +3,7 @@ version: 0.2
 phases:
   pre_build:
     commands:
-      - PROJECT_VERSION= (./mvnw -q -Dexec.executable=echo -Dexec.args='${project.version}' --non-recursive exec:exec)
+      - PROJECT_VERSION= ./mvnw -q -Dexec.executable=echo -Dexec.args='${project.version}' --non-recursive exec:exec
       - echo Project is on this version $PROJECT_VERSION
   build:
     commands:

@@ -7,9 +7,9 @@ phases:
       - $(aws ecr get-login --no-include-email --region $AWS_DEFAULT_REGION)
   build:
     commands:
-      - echo Build Docker Image alpha-bdx-import Started at `date`
-      - docker build -t alpha-bdx-import:latest .
+      - echo Build Docker Image $ALPHA_IMAGE_NAME Started at `date`
+      - docker build --build-arg jar_name=$ALPHA_IMAGE_NAME -t $ALPHA_IMAGE_NAME:$ALPHA_IMAGE_TAG .
   post_build:
     commands:
-      - docker tag alpha-bdx-import:latest 925851410669.dkr.ecr.eu-west-3.amazonaws.com/backend/alpha-bdx-import:latest
-      - docker push 925851410669.dkr.ecr.eu-west-3.amazonaws.com/backend/alpha-bdx-import:latest
+      - docker tag $ALPHA_IMAGE_NAME:latest $ALPHA_REPOSITORY
+      - docker push $ALPHA_REPOSITORY

@@ -1,10 +1,13 @@
 version: 0.2
 
 phases:
-  pre_build:
-    commands:
-      - PROJECT_VERSION= ./mvnw -q -Dexec.executable=echo -Dexec.args='${project.version}' --non-recursive exec:exec
-      - echo Project is on this version $PROJECT_VERSION
   build:
     commands:
-      - echo Build Docker Image alpha-bdx-import:$PROJECT_VERSION Started at `date`
+      - echo Build Docker Image alpha-bdx-import Started at `date`
+      - docker build -t alpha-bdx-import:latest .
+  post-build:
+    commands:
+      - echo AWS Region is $AWS_DEFAULT_REGION
+      - $(aws ecr get-login --region $AWS_DEFAULT_REGION)
+      - docker tag alpha-bdx-import:latest 925851410669.dkr.ecr.eu-west-3.amazonaws.com/backend/alpha-bdx-import:latest
+      - docker push 925851410669.dkr.ecr.eu-west-3.amazonaws.com/backend/alpha-bdx-import:latest

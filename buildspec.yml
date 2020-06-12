@@ -5,7 +5,7 @@ phases:
     commands:
       - echo Build Docker Image alpha-bdx-import Started at `date`
       - docker build -t alpha-bdx-import:latest .
-  post-build:
+  post_build:
     commands:
       - echo AWS Region is $AWS_DEFAULT_REGION
       - $(aws ecr get-login --region $AWS_DEFAULT_REGION)

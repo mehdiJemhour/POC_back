@@ -11,7 +11,6 @@ phases:
       - docker build -t $AWS_DOCKER_NAME:$AWS_DOCKER_TAG .
   post_build:
     commands:
-      - echo AWS Region is $AWS_DEFAULT_REGION
-      - $(aws ecr get-login --region $AWS_DEFAULT_REGION)
+      - echo Start pushing to repository
       - docker tag $AWS_DOCKER_NAME:$AWS_DOCKER_TAG $AWS_REPOSITORY_NAME:$AWS_REPOSITORY_TAG
       - docker push $AWS_REPOSITORY_NAME:$AWS_REPOSITORY_TAG

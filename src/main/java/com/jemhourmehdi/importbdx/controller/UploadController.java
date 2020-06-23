@@ -10,13 +10,12 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/upload")
 @RequiredArgsConstructor
-@CrossOrigin("*")
 public class UploadController {
 
     private final UploadService uploadService;
 
     @PostMapping("/{filename}")
-    public HttpEntity<Void> upload(@RequestBody BordereauPayload data, String filename) {
+    public HttpEntity<Void> upload(@RequestBody BordereauPayload data, @PathVariable String filename) {
         uploadService.upload(data, filename);
         return ResponseEntity.ok().build();
     }

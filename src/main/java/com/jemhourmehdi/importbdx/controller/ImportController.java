@@ -9,27 +9,19 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
 import java.util.Map;
 
 @RestController
 @RequestMapping("/import")
-@CrossOrigin("*") // TODO Add WebConfigurer filter for cross origin
 public class ImportController {
 
     @Autowired
     ExcelReader excelReader;
 
     @PostMapping("/visualize/{sheetName}")
-    // TODO Implement Global error handling
     public HttpEntity<Map> viewSheetData(@RequestParam(name = "file") MultipartFile multipartFile, @PathVariable String sheetName) {
-        try {
-            Sheet sheet = excelReader.readSheet(multipartFile.getInputStream(), sheetName);
-            Map data = new ExcelService(sheet).marshaller();
-            return ResponseEntity.ok(data);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return null;
+        Sheet sheet = excelReader.read(multipartFile).withSheetName(sheetName);
+        Map data = new ExcelService(sheet).marshaller();
+        return ResponseEntity.ok(data);
     }
 }
